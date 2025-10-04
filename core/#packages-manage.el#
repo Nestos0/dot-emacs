@@ -32,12 +32,18 @@
    (lin-global-mode 1)
   )
 
+;; 添加 ace-jump-mode 支持（还原 Neovim flash 跳转）
 (use-package ace-jump-mode
   :ensure t
-  :defer t
+  :defer t  ; 延迟加载，仅在调用时加载
   :config
+  ;; 可选：自定义 ace-jump 行为，如模式（char/word/line）
+  ;; 默认 ace-jump-mode 为 char 跳转；若需 word，用 ace-jump-word-mode
+  ;; 为模拟 flash，可添加高亮或后处理，但基础绑定已足
   (setq ace-jump-mode-move-keys
         (append "abcdefghijklmno" "pqrstuvwxyz"))
+  ;; 绑定已移至 meow-normal-define-key 中的 '("s" . ace-jump-mode)
+  ;; 若需更多：'("S-s" . ace-jump-word-mode) 等，可添加回 meow-normal-define-key
   )
 
 ; (use-package meow
@@ -133,7 +139,6 @@
   :config
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak)  ; Colemak 布局
 
-  (setq meow-use-cursor-position-hack t)
   (defun meow-setup ()
     ;; Motion 状态：自定义移动键 u n e i
     (meow-motion-overwrite-define-key
@@ -170,10 +175,11 @@
      '("f" . find-file)
      '("b" . switch-to-buffer)
      '("w" . save-buffer)
-     '("W" . meow-open-above)
      '("q" . kill-this-buffer))
 
+    ;; Normal 状态：完整绑定，调整移动键并处理 expand/冲突
     (meow-normal-define-key
+     ;; 数字 expand（避免与 digit-argument 冲突，使用 dwim 逻辑）
      '("0" . meow-expand-0)
      '("1" . meow-expand-1)
      '("2" . meow-expand-2)
@@ -184,22 +190,25 @@
      '("7" . meow-expand-7)
      '("8" . meow-expand-8)
      '("9" . meow-expand-9)
+     ;; 结构编辑
      '(")" . meow-forward-slurp)
      '("(" . meow-forward-barf)
      '("{" . meow-backward-slurp)
      '("}" . meow-backward-barf)
+     ;; 负参数
      '("-" . negative-argument)
+     ;; Thing 操作
      '(";" . meow-reverse)
      '("," . meow-inner-of-thing)
      '("." . meow-bounds-of-thing)
      '("[" . meow-beginning-of-thing)
      '("]" . meow-end-of-thing)
+     ;; 编辑命令
      '("a" . meow-append)
-     '("A" . meow-open-below)
+     '("A" . meow-open-below)  ; 大写避免冲突
      '("c" . meow-change)
      '("d" . meow-kill)
      '("g" . meow-join)
-     '("G" . meow-grab)
      '("o" . meow-open-below)
      '("O" . meow-open-above)
      '("p" . meow-yank)
@@ -223,10 +232,8 @@
      '("U" . meow-prev-expand)
      '("b" . meow-back-word)
      '("B" . backward-word)
-     '("s" . ace-jum)
-     '("w" . meow-insert)
-     '("k" . meow-next-word)
-     '("K" . meow-next-symbol)
+     '("M" . meow-next-word)
+     '("M" . meow-next-symbol)
      '("m" . meow-mark-word)
      '("M" . meow-mark-symbol)
      '("f" . meow-find)
