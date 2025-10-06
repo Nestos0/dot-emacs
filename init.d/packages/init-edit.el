@@ -1,6 +1,4 @@
-(provide 'packages-manage)
-
-(require 'packages/git)
+(provide 'packages/init-edit)
 
 (use-package lin
   :ensure t
@@ -35,98 +33,7 @@
 (use-package ace-jump-mode
   :ensure t
   :defer t
-  :config
-  (setq ace-jump-mode-move-keys
-        (append "abcdefghijklmno" "pqrstuvwxyz"))
   )
-
-; (use-package meow
-;   :ensure t
-;   :config
-;   (setq meow-use-cursor-position-hack t)
-;   (defun meow-setup ()
-;     (setq meow-cheatsheet-layout meow-cheatsheet-layout-colemak)
-;     (meow-motion-overwrite-define-key
-;      ;; Use e to move up, n to move down.
-;      ;; Since special modes usually use n to move down, we only overwrite e here.
-;      '("e" . meow-prev)
-;      '("<escape>" . ignore))
-;     (meow-leader-define-key
-;      '("?" . meow-cheatsheet)
-;      '("1" . meow-digit-argument)
-;      '("2" . meow-digit-argument)
-;      '("3" . meow-digit-argument)
-;      '("4" . meow-digit-argument)
-;      '("5" . meow-diegit-argument)
-;      '("6" . meow-digit-argument)
-;      '("7" . meow-digit-argument)
-;      '("8" . meow-digit-argument)
-;      '("9" . meow-digit-argument)
-;      '("0" . meow-digit-argument))
-;     (meow-normal-define-key
-;      '("0" . meow-expand-0)
-;      '("1" . meow-expand-1)
-;      '("2" . meow-expand-2)
-;      '("3" . meow-expand-3)
-;      '("4" . meow-expand-4)
-;      '("5" . meow-expand-5)
-;      '("6" . meow-expand-6)
-;      '("7" . meow-expand-7)
-;      '("8" . meow-expand-8)
-;      '("9" . meow-expand-9)
-;      '("-" . negative-argument)
-;      '(";" . meow-reverse)
-;      '("," . meow-inner-of-thing)
-;      '("." . meow-bounds-of-thing)
-;      '("[" . meow-beginning-of-thing)
-;      '("]" . meow-end-of-thing)
-;      '("/" . meow-visit)
-;      '("a" . meow-append)
-;      '("A" . meow-open-below)
-;      '("b" . meow-back-word)
-;      '("B" . meow-back-symbol)
-;      '("c" . meow-change)
-;      '("e" . meow-prev)
-;      '("E" . meow-prev-expand)
-;      '("f" . meow-find)
-;      '("g" . meow-cancel-selection)
-;      '("G" . meow-grab)
-;      '("h" . meow-left)
-;      '("H" . meow-left-expand)
-;      '("i" . meow-right)
-;      '("I" . meow-right-expand)
-;      '("j" . meow-join)
-;      '("k" . meow-kill)
-;      '("l" . meow-line)
-;      '("L" . meow-goto-line)
-;      '("m" . meow-mark-word)
-;      '("M" . meow-mark-symbol)
-;      '("n" . meow-next)
-;      '("N" . meow-next-expand)
-;      '("o" . meow-block)
-;      '("O" . meow-to-block)
-;      '("p" . meow-yank)
-;      '("q" . meow-quit)
-;      '("r" . meow-replace)
-;      '("s" . meow-insert)
-;      '("S" . meow-open-above)
-;      '("t" . meow-till)
-;      '("u" . meow-undo)
-;      '("U" . meow-undo-in-selection)
-;      '("v" . meow-search)
-;      '("w" . meow-next-word)
-;      '("W" . meow-next-symbol)
-;      '("x" . meow-delete)
-;      '("X" . meow-backward-delete)
-;      '("y" . meow-save)
-;      '("z" . meow-pop-selection)
-;      '("'" . repeat)
-;      '("<escape>" . ignore)
-;      '("<" . indent-rigidly-left)
-;      '(">" . indent-rigidly)))
-;   (setq meow-use-cursor-position-hack t)
-;     (meow-setup)
-;     (meow-global-mode 1))
 
 (use-package meow
   :ensure t
@@ -223,8 +130,9 @@
      '("U" . meow-prev-expand)
      '("b" . meow-back-word)
      '("B" . backward-word)
-     '("s" . ace-jum)
+     '("s" . ace-jump-mode)
      '("w" . meow-insert)
+     '("W" . meow-open-above)
      '("k" . meow-next-word)
      '("K" . meow-next-symbol)
      '("m" . meow-mark-word)
@@ -255,11 +163,6 @@
 (use-package avy :ensure t)
 (use-package consult :ensure t)
 
-;; modeline
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
-
 (use-package ivy
   :ensure t
   :config
@@ -286,8 +189,47 @@
   (global-set-key (kbd "C-c k") 'counsel-ag)
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+;; Enable Vertico.
+(use-package vertico
+  :custom
+  ;; (vertico-scroll-margin 0) ;; Different scroll margin
+  ;; (vertico-count 20) ;; Show more candidates
+  ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
+  ;; (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
+  :init
+  (vertico-mode))
 
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (savehist-mode))
+
+;; Emacs minibuffer configurations.
+(use-package emacs
+  :custom
+  ;; Enable context menu. `vertico-multiform-mode' adds a menu in the minibuffer
+  ;; to switch display modes.
+  (context-menu-mode t)
+  ;; Support opening new minibuffers from inside existing minibuffers.
+  (enable-recursive-minibuffers t)
+  ;; Hide commands in M-x which do not work in the current mode.  Vertico
+  ;; commands are hidden in normal buffers. This setting is useful beyond
+  ;; Vertico.
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  ;; Do not allow the cursor in the minibuffer prompt
+  (minibuffer-prompt-properties
+   '(read-only t cursor-intangible t face minibuffer-prompt)))  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :custom
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
+  ;; (orderless-component-separator #'orderless-escapable-split-on-space)
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles partial-completion))))
+  (completion-category-defaults nil) ;; Disable defaults, use our settings
+  (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 (use-package amx
   :ensure t
   :init (amx-mode))
@@ -364,21 +306,3 @@
    ("M-f" . dirvish-history-go-forward)
    ("M-b" . dirvish-history-go-backward)
    ("M-e" . dirvish-emerge-menu)))
-
-
-(use-package dired-x
-  :config
-  ;; Make dired-omit-mode hide all "dotfiles"
-  (setq dired-omit-files
-        (concat dired-omit-files "\\|^\\..*$")))
-
-;; Use `nerd-icons' as Dirvish's icon backend
-(use-package nerd-icons)
-
-;; Or, use `vscode-icon' instead
-;; (use-package vscode-icon
-;;   :config
-;;   (push '("jpg" . "image") vscode-icon-file-alist))
-
-;; miscs
-(setq delete-by-moving-to-trash t)

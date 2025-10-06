@@ -7,10 +7,12 @@
 (setq use-dialog-box nil)
 (setq inhibit-startup-message t)
 
-(add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
+(add-to-list 'load-path
+	     (expand-file-name (concat user-emacs-directory "init.d")))
+(add-to-list 'load-path
+	     (expand-file-name (concat user-emacs-directory "packages")))
 (require 'configure)
-(require 'packages-manage)
-(require 'themes/packages)
+(require 'core)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

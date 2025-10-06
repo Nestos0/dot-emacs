@@ -21,6 +21,8 @@
         select-enable-clipboard t
         save-interprogram-paste-before-kill t)))
 
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 (set-language-environment "utf-8")
 (set-buffer-file-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -63,4 +65,7 @@
 (require 'recentf)
 (recentf-mode 1)
 (setq recentf-max-menu-item 10)
+
+;; miscs
+(setq delete-by-moving-to-trash t)
 
