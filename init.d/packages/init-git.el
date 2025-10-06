@@ -1,4 +1,4 @@
-(provide 'packages/init-git)
+(provide 'init-git)
 
 (use-package magit
   :ensure t)

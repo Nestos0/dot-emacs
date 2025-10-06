@@ -59,7 +59,6 @@
 (setq select-enable-primary t)
 (setq select-enable-clipboard t)
 
-
 (setq make-backup-files nil)
 
 (require 'recentf)
@@ -69,3 +68,6 @@
 ;; miscs
 (setq delete-by-moving-to-trash t)
 
+;; edit
+(electric-pair-mode t)
+(show-paren-mode t)

@@ -1,4 +1,4 @@
-(provide 'packages/themes/init)
+(provide 'themes/init)
 
 (use-package all-the-icons
   :if (display-graphic-p))
