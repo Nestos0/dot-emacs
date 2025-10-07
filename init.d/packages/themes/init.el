@@ -3,14 +3,6 @@
 (use-package all-the-icons
   :if (display-graphic-p))
 
-;; (use-package kind-icon
-;;   :ensure t)
-
-;; modeline
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
-
 (use-package doom-themes
   :ensure t
   :custom

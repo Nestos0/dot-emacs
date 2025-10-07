@@ -1,5 +1,6 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 (package-initialize)
 
 (setq-default mojor-mode 'text-mode)
@@ -7,12 +8,16 @@
 (setq use-dialog-box nil)
 (setq inhibit-startup-message t)
 
+(setq default-input-method nil)
+(setq use-default-font-for-symbols t)
+(setq pgtk-use-im-context-on-new-connection nil)
+
 (add-to-list 'load-path
 	     (expand-file-name (concat user-emacs-directory "init.d")))
 (add-to-list 'load-path
 	     (expand-file-name (concat user-emacs-directory "packages")))
-(require 'configure)
 (require 'core)
+(require 'configure)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -33,7 +38,16 @@
      "0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
      "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098"
      default))
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(ace-jump-mode ace-window all-the-icons amx consult corfu dashboard
+		   default-text-scale dired-sidebar dirvish
+		   doom-modeline doom-themes good-scroll ivy kind-icon
+		   lin lsp-mode lsp-treemacs magit meow minions mwim
+		   nerd-icons-corfu orderless org-modern
+		   page-break-lines paredit paredit-everywhere
+		   paredit-menu transient-posframe ultra-scroll
+		   undo-tree use-package-hydra vscode-icon
+		   xwwp-follow-link-ivy zoxide))
  '(warning-suppress-log-types '((use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -41,3 +55,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'scroll-left 'disabled nil)

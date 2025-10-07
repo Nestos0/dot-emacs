@@ -238,3 +238,7 @@
   :ensure t
   :if window-system
   :init (good-scroll-mode))
+
+(use-package rime
+  :custom
+  (default-input-method "rime"))

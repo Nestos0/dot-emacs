@@ -71,3 +71,5 @@
 ;; edit
 (electric-pair-mode t)
 (show-paren-mode t)
+
+(doom-modeline-mode 1)
