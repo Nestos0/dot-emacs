@@ -1,0 +1,17 @@
+
+;; ----- amx-history -----
+(
+ package-install
+ rime-deploy
+ cd
+ 5x5
+ amx
+ arp
+ dbx
+)
+
+;; ----- amx-data -----
+(
+ (rime-deploy . 3)
+ (package-install . 2)
+)

@@ -218,6 +218,8 @@
   :init (setq display-time-default-load-average nil
               display-time-format "%H:%M"))
 
+(doom-modeline-mode 1)
+
 ;; Scrolling
 ;; Scroll one line at a time (less "jumpy" than defaults)
 (setq hscroll-step 1
