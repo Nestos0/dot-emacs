@@ -174,6 +174,8 @@
  default-buffer-file-coding-system 'utf-8
  slime-net-coding-system 'utf-8-unix)
 
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 (set-face-attribute 'default nil
 		    :font "FiraCode Nerd Font"
 		    :height 130)
